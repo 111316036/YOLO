@@ -381,8 +381,17 @@
         <div class="container">
             <section id="section-about">
                 <h2>什麼是 YOLO？</h2>
-                <p><strong>YOLO (You Only Look Once)</strong> 是一套著名的一階段 (One-Stage) 即時物件偵測系統。傳統的物件偵測演算法（如 R-CNN 系列）通常需要先找出可能包含物體的候選區域（Region Proposals），再對這些區域進行分類，流程緩慢且耗費運算資源。</p>
-                <p>YOLO 的核心創新在於<b>「把物件偵測重新定義為迴歸問題」</b>。它只需要單次前向傳播（Forward Pass），就能直接同時預測出整張影像中所有物件的邊界框（Bounding Boxes）與類別機率，這讓它的處理速度達到了驚人的即時性。</p>
+                <p><strong>YOLO (You Only Look Once)</strong>  的全稱是 You Only Look Once，名字靈感來自流行語 "You only live once" 。它是由 Joseph Redmon 等人於 2015 年提出的電腦視覺物件偵測演算法，它是 One-Stage（單階段）物件偵測方法的開山鼻祖。</p>            
+            </section>
+
+            <section id="section-about">
+                <h2>YOLO主要解決甚麼問題</h2>
+                <p>傳統的物件偵測（如 R-CNN 系列）屬於 Two-Stage（雙階段），必須先在圖片中隨機找出幾千個「可能包含物體的候選區域」，再一個個送進 CNN 分類，這種做法極度消耗資源且速度慢，無法做到即時處理。但YOLO 解決了「物件偵測無法兼顧高速度與即時性」的技術瓶頸。</p>            
+            </section>
+
+            <section id="section-about">
+                <h2>YOLO物件偵測怎麼做</h2>
+                <p>YOLO在物件偵測部分基本上就是將圖拆成很多個網格單元格(grid cell)，然後在每個網格單元格進行2個邊界框(bounding box)的預測和屬於哪個類別的機率預測，最後用閾值和NMS (Non-Maximum Suppression) 的方式得到結果。</p>
             </section>
 
             <section id="section-principles">
@@ -396,12 +405,13 @@
                     </div>
                     <div class="step-card">
                         <h3><span class="step-num">2</span> 單一卷積網路同時預測</h3>
-                        <p>執行單個卷積神經網路（CNN）。僅需這一次前向傳播，網路就會同時輸出每個網格對應的多個邊界框、置信度分數（Confidence Score）以及類別條件機率。</p>
+                        <p>執行單個卷積神經網路（CNN），僅需這一次前向傳播，網路就會同時輸出每個網格對應的多個邊界框、置信度分數（Confidence Score）以及類別條件機率。</p>
                     </div>
                     <div class="step-card">
                         <h3><span class="step-num">3</span> 閾值過濾與 NMS 後處理</h3>
                         <p>基於模型輸出的信心程度，先依據閾值（Threshold）濾除背景雜訊，再透過非極大值抑制（Non-max suppression, NMS）消除重疊的冗餘邊界框，產出最終精準的偵測結果。</p>
                     </div>
+                    <p>備註:在 YOLO 演算法中，置信度分數（Confidence Score，又稱信心度分數） 是用來衡量「某個預測框（Bounding Box）有多大把握這裡有東西，且這個框畫得有多準」的一個數學指標。數值通常為0~1</p>
                 </div>
 
                 <img src="image/1.webp" alt="YOLO Detection System" style="max-width: 100%; height: auto; border-radius: 4px;">
