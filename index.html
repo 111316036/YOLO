@@ -311,18 +311,12 @@
             background-color: #fafafa;
         }
 
-        /* YOLO V1~V7 演進區塊矩陣 */
+        /* 🚀 YOLO V1~V7 演進區塊（垂直單欄長條佈局） */
         .version-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            display: flex;
+            flex-direction: column; 
             gap: 1.5rem;
             margin-top: 1.5rem;
-        }
-
-        @media (max-width: 500px) {
-            .version-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         .v-card {
@@ -334,6 +328,18 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            width: 100%; 
+            box-sizing: border-box;
+        }
+
+        /* 精準限制演進區塊內的圖片大小，防止垂直版面被撐得太大 */
+        .v-card img {
+            max-width: 450px; /* 限制最大寬度為 450px */
+            width: 100%;      /* 手機板時可自動縮小 */
+            height: auto;
+            border-radius: 6px;
+            display: block;
+            margin: 1rem auto; /* 上下留空、左右置中 */
         }
 
         .v-card-header {
@@ -495,6 +501,9 @@
             <li><a href="#section-evolution"><span>🚀</span><span class="menu-text">YOLO 演進</span></a></li>
             <li><a href="#section-ai-learning"><span>🤖</span><span class="menu-text">AI 學習紀錄</span></a></li>
             <li><a href="#section-verification"><span>✅</span><span class="menu-text">查證與修正</span></a></li>
+            <li><a href="#section-visual"><span>🖼️</span><span class="menu-text">視覺化說明</span></a></li>
+            <li><a href="#section-cases"><span>📈</span><span class="menu-text">實際應用</span></a></li>
+            <li><a href="#section-reflection"><span>💭</span><span class="menu-text">學習反思</span></a></li>
         </ul>
     </nav>
 
@@ -507,9 +516,9 @@
         <div class="container">
             <section id="section-about">
                 <h2>什麼是 YOLO？</h2>
-                <p><strong>YOLO</strong> 的全稱是 You Only Look Once，名字靈感來自流行語 "You only live once" 。它是由 Joseph Redmon 等人於 2015 年提出的電腦視覺物件偵測演算法，它是 One-Stage（單階段）物件偵測方法的先驅。</p>            
+                <p><strong>YOLO (You Only Look Once)</strong> 的全稱是 You Only Look Once，名字靈感來自流行語 "You only live once" 。它是由 Joseph Redmon 等人於 2015 年提出的電腦視覺物件偵測演算法，它是 One-Stage（單階段）物件偵測方法的先驅。</p>            
                 
-                <h2 style="margin-top: 3rem;">YOLO 主要解決甚麼問題</h2>
+                <h2>YOLO 主要解決甚麼問題</h2>
                 <p>傳統的物件偵測屬於 Two-Stage（雙階段），必須先在圖片中隨機找出幾千個「可能包含物體的候選區域」，再一個個送進 CNN 分類，這種做法非常消耗資源且速度慢，無法做到即時處理，但 YOLO 解決了「物件偵測無法兼顧高速度與即時性」的技術瓶頸。</p>            
             </section>
 
@@ -625,8 +634,8 @@
                             <span class="v-author">Joseph Redmon</span>
                         </div>
                         <p class="v-body">引入了 Anchor Box（錨定框）機制並加入 Batch Normalization，大幅改善定位精準度，YOLO9000 版本更能同時識別高達 9000 種物體。</p>
-                        <img src="assets/20.png" alt="錨定框" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
-                        <figcaption style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.8rem; font-weight: 500; letter-spacing: 0.5px;">
+                        <img src="assets/20.png" alt="錨定框">
+                        <figcaption style="font-size: 0.9rem; color: var(--text-muted); text-align: center; margin-top: -0.5rem; margin-bottom: 1rem; font-weight: 500; letter-spacing: 0.5px;">
                             (錨定框（Anchor Box）示意圖)
                         </figcaption>
                         <span class="v-tech">💡 核心突破：Anchor Boxes / 批次正規化</span>
@@ -638,8 +647,8 @@
                             <span class="v-author">Joseph Redmon</span>
                         </div>
                         <p class="v-body">原作者經典最終章，採用 Darknet-53 架構，最大的亮點是引入「多尺度預測」（類似特徵金字塔），徹底補齊了過往對小物件偵測能力不足的致命短板。</p>
-                        <img src="assets/19.png" alt="多尺度預測" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
-                        <figcaption style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.8rem; font-weight: 500; letter-spacing: 0.5px;">
+                        <img src="assets/19.png" alt="多尺度預測">
+                        <figcaption style="font-size: 0.9rem; color: var(--text-muted); text-align: center; margin-top: -0.5rem; margin-bottom: 1rem; font-weight: 500; letter-spacing: 0.5px;">
                             (多尺度預測示意圖)
                         </figcaption>
                         <span class="v-tech">💡 核心突破：Multi-scale 多尺度預測</span>
@@ -831,7 +840,7 @@
             </section>
 
             <section id="section-cases">
-                <h2>應用案例</h2>
+                <h2>實際應用</h2>
                 <div class="question-block" style="border-left: 4px solid #f59e0b;">
                     <p>YOLO 的高速度與高泛化性，使其在多種實際場景中得到廣泛落地應用。本專案特別聚焦於<strong>「智慧交通路口車流追蹤系統」</strong>這項明星工業實例：</p>
                     <div class="sub-segment" style="margin-bottom: 0;">
