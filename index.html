@@ -417,6 +417,43 @@
             color: #334155;
         }
 
+        /* 🎨 高級精緻美化版 Footer 樣式 */
+        .custom-footer {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            border-top: 1px solid var(--border-color);
+            padding: 2.5rem 2rem;
+            margin-top: 6rem;
+            text-align: center;
+            box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.03);
+            position: relative;
+        }
+
+        .custom-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .custom-footer p {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 1.5px;
+            margin: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #ffffff;
+            padding: 0.6rem 2rem;
+            border-radius: 50px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+        }
+
         /* 手機板響應式調整 */
         @media (max-width: 768px) {
             body {
@@ -448,7 +485,6 @@
 </head>
 <body>
 
-    <!-- 🧭 左側懸浮展開導航欄（完全依照最新區塊順序編排） -->
     <nav class="sidebar">
         <div class="sidebar-brand">📌<span> YOLO</span></div>
         <ul class="sidebar-menu">
@@ -469,7 +505,6 @@
         </header>
 
         <div class="container">
-            <!-- 區塊 1 -->
             <section id="section-about">
                 <h2>什麼是 YOLO？</h2>
                 <p><strong>YOLO (You Only Look Once)</strong> 的全稱是 You Only Look Once，名字靈感來自流行語 "You only live once" 。它是由 Joseph Redmon 等人於 2015 年提出的電腦視覺物件偵測演算法，它是 One-Stage（單階段）物件偵測方法的先驅。</p>            
@@ -478,7 +513,6 @@
                 <p>傳統的物件偵測屬於 Two-Stage（雙階段），必須先在圖片中隨機找出幾千個「可能包含物體的候選區域」，再一個個送進 CNN 分類，這種做法非常消耗資源且速度慢，無法做到即時處理，但 YOLO 解決了「物件偵測無法兼顧高速度與即時性」的技術瓶頸。</p>            
             </section>
 
-            <!-- 區塊 2 -->
             <section id="section-principles">
                 <h2>YOLO 運作流程</h2>
                 <p>當一張圖片輸入到 YOLO 網路中時，它主要執行以下三個步驟：</p>
@@ -508,7 +542,6 @@
                     </figure>
                 </div>
                 
-                <!-- 💡 置信度分數備註卡片 -->
                 <div class="note-box">
                     <p><strong>備註：</strong>在 YOLO 演算法中，置信度分數（Confidence Score，又稱信心度分數）是用來衡量「某個預測框（Bounding Box）有多大把握這裡有東西，且這個框畫得有多準」的一個數學指標，數值通常為 0 ~ 1。</p>
                     
@@ -520,13 +553,11 @@
                     </details>
                 </div>
 
-                <!-- 💡 前向傳播（Forward Pass）備註卡片 -->
                 <div class="note-box" style="margin-top: 1rem; background-color: #f0fdf4; border-left-color: #16a34a;">
                     <p style="color: #166534;"><strong>備註：</strong>在深度學習中，前向傳播（Forward Pass）是指數據自輸入層進入，一路上前推經過神經網路各隱藏層進行矩陣運算，最終在輸出層得到預測結果的單向流動過程。YOLO 的特點即是在單次前向傳播中並行輸出位置與類別機率。</p>
                 </div>
             </section>
 
-            <!-- 區塊 3 -->
             <section id="section-apps">
                 <h2>常見應用</h2>
                 <div class="grid-steps">
@@ -553,7 +584,6 @@
                 </div>
             </section>
 
-            <!-- 區塊 4：優缺點分析（已精確移至 常見應用 之後、YOLO 演進 之前） -->
             <section id="section-analysis">
                 <h2>優缺點分析</h2>
                 <div class="pros-cons">
@@ -575,7 +605,6 @@
                 </div>
             </section>
 
-            <!-- 區塊 5：YOLO 演進 -->
             <section id="section-evolution">
                 <h2>YOLO 演進</h2>
                 <p>以下是 YOLO 歷史上前七代的核心發展歷程：</p>
@@ -596,6 +625,10 @@
                             <span class="v-author">Joseph Redmon</span>
                         </div>
                         <p class="v-body">引入了 Anchor Box（錨定框）機制並加入 Batch Normalization，大幅改善定位精準度，YOLO9000 版本更能同時識別高達 9000 種物體。</p>
+                        <img src="assets/20.png" alt="錨定框" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
+                        <figcaption style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.8rem; font-weight: 500; letter-spacing: 0.5px;">
+                            (錨定框（Anchor Box）示意圖)
+                        </figcaption>
                         <span class="v-tech">💡 核心突破：Anchor Boxes / 批次正規化</span>
                     </div>
 
@@ -604,7 +637,11 @@
                             <h4 class="v-title">YOLOv3 (2018)</h4>
                             <span class="v-author">Joseph Redmon</span>
                         </div>
-                        <p class="v-body">原作者經典最終章，採用 Darknet-53 架構，最大的亮點是引入「多尺度預測」（類似特徵金字塔），徹底補齊了過往對於小物件偵測能力不足的致命短板。</p>
+                        <p class="v-body">原作者經典最終章，採用 Darknet-53 架構，最大的亮點是引入「多尺度預測」（類似特徵金字塔），徹底補齊了過往對小物件偵測能力不足的致命短板。</p>
+                        <img src="assets/19.png" alt="多尺度預測" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
+                        <figcaption style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.8rem; font-weight: 500; letter-spacing: 0.5px;">
+                            (多尺度預測示意圖)
+                        </figcaption>
                         <span class="v-tech">💡 核心突破：Multi-scale 多尺度預測</span>
                     </div>
 
@@ -642,11 +679,13 @@
                         </div>
                         <p class="v-body">由台灣中研院團隊主導研發。提出了擴展高效層聚合網路（E-ELAN）和基於卷積的重參數化模型，在速度與準確度平衡上創下了帕累托最優（當時世界第一）。</p>
                         <span class="v-tech">💡 核心突破：E-ELAN 架構 / 模型縮放策略</span>
+                        <div class="note-box" style="margin-top: 1rem; background-color: #f0fdf4; border-left-color: #16a34a;">
+                            <p style="color: #166534;"><strong>備註：</strong>帕累托最優：指資源分配的一種理想狀態：在無法使任何人境況變壞的前提下，也無法讓任何人的處境變得更好。此時的資源分配已經達到極致，沒有再改進的空間。</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 區塊 6：AI 輔助學習紀錄 -->
             <section id="section-ai-learning">
                 <h2>AI 輔助學習紀錄</h2>
                 
@@ -748,7 +787,6 @@
                 </div>
             </section>
 
-            <!-- 區塊 7：查證與修正 -->
             <section id="section-verification">
                 <h2>查證與修正</h2>
                 <div class="question-block" style="border-left: 4px solid #0284c7;">
@@ -767,42 +805,65 @@
                                 <img src="assets/18.jpg" alt="AI Prompt 設計截圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
                             </div>
                         </details>
-                        <details>
+                        <details style="margin-top: 0.5rem;">
                             <summary>🖼️ 點擊展開 / 收起：修正後</summary>
                             <div class="details-content">
                                 <img src="assets/15.png" alt="AI Prompt 設計截圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
                             </div>
                         </details>
+                    </div>
+                    <p>查證自 <a href="https://chih-sheng-huang821.medium.com/%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92-%E7%89%A9%E4%BB%B6%E5%81%B5%E6%B8%AC-you-only-look-once-yolo-4fb9cf49453c" target="_blank">medium.com/深度學習-物件偵測</a>、
+                        <a href="https://ai4kids.ai/blogs/blog/what-is-yolo?srsltid=AfmBOoqB69i6gUHpqFHEu1w0MHxKi40SSP9yf9SnAgwKJwSN701Qt2_w" target="_blank">ai4kids.ai/blogs</a>、
+                        <a href="https://hackmd.io/@rayhchs/BkUKcHHuj" target="_blank">HACKMD/rayhchs</a>。</p>
+                </div>
+            </section>
+
+            <section id="section-visual">
+                <h2>視覺化說明</h2>
+                <div style="text-align: center; margin: 3rem 0 1rem 0;">
+                    <figure style="margin: 0; display: inline-block; max-width: 100%; background: var(--card-bg); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
+                        <img src="assets/15.png" alt="YOLO Detection System" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
+                        <figcaption style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.8rem; font-weight: 500; letter-spacing: 0.5px;">
+                            YOLO 流程圖
+                        </figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="section-cases">
+                <h2>應用案例</h2>
+                <div class="question-block" style="border-left: 4px solid #f59e0b;">
+                    <p>YOLO 的高速度與高泛化性，使其在多種實際場景中得到廣泛落地應用。本專案特別聚焦於<strong>「智慧交通路口車流追蹤系統」</strong>這項明星工業實例：</p>
+                    <div class="sub-segment" style="margin-bottom: 0;">
+                        <ul>
+                            <li><strong>實務部署機制：</strong>在智慧安防與科技執法中，技術人員會將 YOLO 模型直接部署在路口監視器（CCTV）中。</li>
+                            <li><strong>多模型結合：</strong>單純的 YOLO 只能找出車輛的 Bounding Box，實務上會結合 <strong>ByteTrack</strong> 或 <strong>DeepSORT</strong> 等動態軌跡追蹤演算法，發給每台車固定 ID（如 Car #1），藉此計算路口的即時車流量與超時違停偵測。</li>
+                            <li><strong>開源開發生態：</strong>目前網路與 GitHub 上最普及的開源實作是基於 <strong>Ultralytics YOLO</strong> 框架，開發者僅需撰寫數十行 Python 程式碼並呼叫其內建的 <code>object_counter</code> 工具，即可快速在邊緣硬體上實現高精度的車流計數。</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="question-block" style="border-left: 4px solid #0284c7;">
-                    <p>我擔心我用 AI 生成的流程圖可能有誤，因此需要進行查證與修正。</p>
-                    
-                    <div class="sub-segment">
-                        <h4>🔍 如何確認是否正確</h4>
-                        <p>我採用比較有趣的方法，一開始我先用Gemini的Nano Banana生成一張流程圖，但Gemini生成的流程圖雖然很酷，但內容比較簡陋，我就將圖放到ChatGPT上詢問他這個圖片是否有誤，ChatGPT說此圖是YOLO很早期的流程，所以我請ChatGPT幫我生成一張更精確的流程圖，我再把這邊生成的流程圖丟到Gemini上評價，Gemini說這張圖已經很完整，然後我再自己重新看過這張圖，配上網路上別人分享的資訊確認是否正確。</p>
-                    </div>
+            </section>
 
+            <section id="section-reflection">
+                <h2>學習反思</h2>
+                <div class="question-block" style="border-left: 4px solid #6b7280;">
+                    <div class="sub-segment">
+                        <h4>💡 對個人學習的實質幫助</h4>
+                        <p>透過將學術論文的導讀資料轉化為前端網頁，我深刻體會到「知識視覺化」的威力。我不僅複習了 HTML/CSS Flexbox 與 Grid 的排版布局技巧，更被迫在設計卡片結構時，去反思深度學習中抽象的矩陣結構與「地盤責任制」的底層含意，這遠比單純閱讀 Medium 文章更有收穫。</p>
+                    </div>
+                    <div class="sub-segment">
+                        <h4>⚠️ 與 AI 協作的優缺點與限制</h4>
+                        <p>在與 AI 互動的過程中，AI 能夠非常迅速地提供完整的底層技術說明，並且在網頁除錯（例如解決本地 CORS 破圖、或修正重複的 Section ID 衝突）上提供強大的指引。然而，AI 生成的程式碼有時會偏向過度防禦（例如胡亂塞入不必要的全域屬性），這需要我們資工系學生保持批判性思維去過濾與微調，絕不能盲目複製貼上。</p>
+                    </div>
                     <div class="sub-segment" style="margin-bottom: 0;">
-                        <h4>🔄 修正前後對比</h4>
-                        <details>
-                            <summary>🖼️ 點擊展開 / 收起：修正前</summary>
-                            <div class="details-content">
-                                <img src="assets/18.jpg" alt="AI Prompt 設計截圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
-                            </div>
-                        </details>
-                        <details>
-                            <summary>🖼️ 點擊展開 / 收起：修正後</summary>
-                            <div class="details-content">
-                                <img src="assets/15.png" alt="AI Prompt 設計截圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
-                            </div>
-                        </details>
+                        <h4>🏁 結語與未來展望</h4>
+                        <p>本次專案讓我成功克服了 One-Stage 物件偵測演算法的理解障礙，也讓我學會了如何用前端美學來包裝一個複雜的 AI 技術主題。未來我希望能嘗試將 Arduino 智慧自走車結合輕量化的 YOLO 邊緣運算模型，真正動手實作出一個具備障礙物規避與導航能力的實體系統！</p>
                     </div>
                 </div>
             </section>
         </div>
 
-        <footer>
+        <footer class="custom-footer">
             <p>資二甲 111316036 劉采盈</p>
         </footer>
     </div>
