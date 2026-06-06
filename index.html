@@ -32,7 +32,7 @@
             display: flex; /* 讓導航欄與內容並排 */
         }
 
-        /* 🧭 左側懸停展開導航欄 */
+        /* 🧭 左側懸停展開導航欄（已修正：支援垂直滾動與隱藏滾動條） */
         .sidebar {
             width: var(--sidebar-collapsed-width);
             height: 100vh;
@@ -45,12 +45,27 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
             z-index: 100;
-            overflow: hidden;
             white-space: nowrap;
             transition: width 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
             box-shadow: 0 0 0 rgba(0,0,0,0);
+            
+            /* 💡 核心修正：高度不夠時允許垂直滾動，水平方向強制隱藏 */
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* 💡 美化導航欄的滾動條，讓它看起來更細緻精美，不會擋住圖示 */
+        .sidebar::-webkit-scrollbar {
+            width: 4px; /* 超細滾動條 */
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: transparent; /* 預設隱藏 */
+            border-radius: 4px;
+        }
+        .sidebar:hover::-webkit-scrollbar-thumb {
+            background-color: var(--border-color); /* 滑鼠移入導航欄時才淡淡顯示滾動條 */
         }
 
         .sidebar:hover {
@@ -65,6 +80,7 @@
             color: var(--text-main);
             letter-spacing: 0.5px;
             padding-left: 0.4rem;
+            flex-shrink: 0; /* 防止標題被捲動壓縮 */
         }
 
         .sidebar-brand span {
@@ -118,8 +134,8 @@
             flex: 1;
             min-width: 0;
             transition: margin-left 0.3s ease;
-            position: relative; /* 💡 補上這一行 */
-            z-index: 1;        /* 💡 補上這一行 */
+            position: relative; 
+            z-index: 1;      
         }
 
         header {
@@ -159,7 +175,6 @@
             scroll-margin-top: 2rem;
         }
 
-        /* 恢復成最乾淨原始的 h2 版本 */
         h2 {
             font-size: 1.8rem;
             color: var(--accent);
@@ -383,6 +398,34 @@
             align-self: flex-start;
         }
 
+        /* 📊 比較表格專屬樣式 */
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .tech-table th, .tech-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tech-table th {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .tech-table tr:last-child td {
+            border-bottom: none;
+        }
+
         /* 優缺點二欄樣式 */
         .pros-cons {
             display: grid;
@@ -421,6 +464,58 @@
         li {
             margin-bottom: 0.75rem;
             color: #334155;
+        }
+
+        /* 💻 程式碼高亮區塊 */
+        pre {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            margin: 1.5rem 0;
+        }
+
+        code {
+            color: #ec4899;
+            font-family: monospace;
+            background-color: #f1f5f9;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        pre code {
+            color: inherit;
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
+
+        /* 手機板 YouTube RWD 容器 */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            aspect-ratio: 16 / 9;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border-color);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         /* 🎨 高級精緻美化版 Footer 樣式 */
@@ -472,6 +567,7 @@
                 border-right: none;
                 border-bottom: 1px solid var(--border-color);
                 padding: 1.5rem;
+                overflow-y: visible; /* 手機板不需要內部滾動 */
             }
             .sidebar:hover {
                 width: 100%;
@@ -496,12 +592,13 @@
         <ul class="sidebar-menu">
             <li><a href="#section-about"><span>🔍</span><span class="menu-text">什麼是 YOLO？</span></a></li>
             <li><a href="#section-principles"><span>⚡</span><span class="menu-text">YOLO運作流程</span></a></li>
+            <li><a href="#section-vocab"><span>📖</span><span class="menu-text">名詞科普</span></a></li>
             <li><a href="#section-apps"><span>🚗</span><span class="menu-text">常見應用</span></a></li>
             <li><a href="#section-analysis"><span>📊</span><span class="menu-text">優缺點分析</span></a></li>
             <li><a href="#section-evolution"><span>🚀</span><span class="menu-text">YOLO 演進</span></a></li>
-            <li><a href="#section-ai-learning"><span>🤖</span><span class="menu-text">AI 學習紀錄</span></a></li>
+            <li><a href="#section-ai-learning"><span>🤖</span><span class="menu-text">AI 輔助學習</span></a></li>
             <li><a href="#section-verification"><span>✅</span><span class="menu-text">查證與修正</span></a></li>
-            <li><a href="#section-visual"><span>🖼️</span><span class="menu-text">視覺化說明</span></a></li>
+            <li><a href="#section-visual"><span>🎨</span><span class="menu-text">視覺化說明</span></a></li>
             <li><a href="#section-cases"><span>📈</span><span class="menu-text">應用實例</span></a></li>
             <li><a href="#section-reflection"><span>💭</span><span class="menu-text">學習反思</span></a></li>
         </ul>
@@ -516,54 +613,69 @@
         <div class="container">
             <section id="section-about">
                 <h2>什麼是 YOLO？</h2>
-                <p><strong>YOLO</strong> 的全稱是 You Only Look Once，名字靈感來自流行語 "You only live once" 。它是由 Joseph Redmon 等人於 2015 年提出的電腦視覺物件偵測演算法，它是 One-Stage（單階段）物件偵測方法的先驅。</p>            
+                <p><strong>YOLO</strong> 的全稱是 You Only Look Once（你只需看一眼），名字靈感來自流行語 "You only live once"。它是由 Joseph Redmon 等人於 2015 年提出的物件偵測演算法，徹底改寫了電腦視覺領域的歷史，成為「單階段（One-Stage）」物件偵測方法的鼻祖。</p> 
                 
-                <h2>YOLO 主要解決甚麼問題</h2>
-                <p>傳統的物件偵測術屬於 Two-Stage（雙階段），必須先在圖片中隨機找出幾千個「可能包含物體的候選區域」，再一個個送進 CNN 分類，這種做法非常消耗資源且速度慢，無法做到即時處理，但 YOLO 解決了「物件偵測無法兼顧高速度與即時性」的技術瓶頸。</p>            
+                <h2>YOLO 主要解決什麼問題？</h2>
+                <p>在 YOLO 出現之前，傳統的物件偵測技術屬於「雙階段（Two-Stage）」，它就像一個謹慎過頭的人，拿到圖片後，要先在裡面隨機找出幾千個「可能包含物體的候選格子」，再把這幾千個格子一個個送進 CNN 網路去分類、確認裡面到底是什麼，這種做法非常消耗電腦資源，而且速度非常非常慢，根本無法做到「即時偵測」（例如自動駕駛必須邊開邊看）。</p>
+                <p>YOLO 的出現，成功打破了「物件偵測沒辦法同時兼顧『超高速度』與『即時性』」的技術瓶頸。</p> 
             </section>
 
             <section id="section-principles">
                 <h2>YOLO 運作流程</h2>
-                <p>當一張圖片輸入到 YOLO 網路中時，它主要執行以下三個步驟：</p>
+                <p>當一張圖片輸入到 YOLO 網路中時，只需要「看一眼」整張圖，就能同時抓出所有物體的位置與類別。主要執行以下三個步驟：</p>
  
                 <div class="grid-steps">
                     <div class="step-card">
                         <h3><span class="step-num">1</span> 影像預處理與網格劃分</h3>
-                        <p>將輸入圖像統一 Resize 到 448×448 的標準尺寸，並在演算法邏輯上將影像劃分為 S × S 的網格（如 7×7），由物件中心點所在的網格負責偵測該物件。</p>
+                        <p>先把進來的照片統一縮放到標準大小，並在演算法邏輯上將整張圖切成 S × S 的網格（像九宮格那樣），如果某個物體的中心點剛好落在某個格子裡，那個格子就要負責認領並偵測這個物體。</p>
                     </div>
                     <div class="step-card">
                         <h3><span class="step-num">2</span> 單一卷積網路同時預測</h3>
-                        <p>執行單個卷積神經網路（CNN），僅需這一次前向傳播，網路就會同時輸出每個網格對應的多個邊界框、置信度分數（Confidence Score）以及類別條件機率。</p>
+                        <p>整張照片只丟進去卷積神經網路（CNN）做「一次」計算，就在這短短一次的傳遞過程中，網路就會同時生出所有格子畫出來的框框、這些框框的「置信度分數」，以及它是哪種物體的機率。</p>
                     </div>
                     <div class="step-card">
                         <h3><span class="step-num">3</span> 閾值過濾與 NMS 後處理</h3>
-                        <p>基於模型輸出的信心程度，先依據閾值（Threshold）濾除背景雜訊，再透過非極大值抑制（Non-max suppression, NMS）消除重疊的冗餘邊界框，產出最終精準的偵測結果。</p>
+                        <p>最後電腦會根據信心程度，先把分數太低的「背景雜訊框」刪掉，再透過一個叫非極大值抑制（NMS）的篩選機制，把一堆重疊、重複畫在同一個物體上的框框擦掉，只留下最精準的唯一答案。</p>
                     </div>
                 </div>
-                
 
                 <div style="text-align: center; margin: 3rem 0 1rem 0;">
                     <figure style="margin: 0; display: inline-block; max-width: 100%; background: var(--card-bg); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
                         <img src="assets/1.png" alt="YOLO Detection System" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
                         <figcaption style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.8rem; font-weight: 500; letter-spacing: 0.5px;">
-                            (Resize → CNN → NMS)
+                            (圖片縮放 → 網格一次性預測 → 篩選出最終結果)
                         </figcaption>
                     </figure>
                 </div>
-                
-                <div class="note-box">
-                    <p><strong>備註：</strong>在 YOLO 演算法中，置信度分數（Confidence Score，又稱信心度分數）是用來衡量「某個預測框（Bounding Box）有多大把握這裡有東西，且這個框畫得有多準」的一個數學指標，數值通常為 0 ~ 1。</p>
-                    
+            </section>
+
+            <section id="section-vocab">
+                <h2>名詞科普</h2>
+
+                <div class="note-box" style="margin-top: 1rem;">
+                    <p><strong>1. 置信度分數 (Confidence Score) ——「AI 的把握度」：</strong></p>
+                    <p style="color: #334155; margin-top: 0.5rem;">數值介於 0 到 1 之間，它代表 AI 有多大把握「這裡真的有東西」，而且「自己畫的框框抓得有多準」，如果分數是 0.95，就代表它幾乎百分之百確定沒看錯。</p>
                     <details style="margin-top: 1rem;">
-                        <summary>🔍 點擊展開 / 收起：置信度分數核心數學公式</summary>
+                        <summary>🔍 點擊展開 / 收起：置信度分數與計算公式示意圖</summary>
                         <div class="details-content">
                             <img src="assets/4.png" alt="置信度分數示意圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
                         </div>
                     </details>
                 </div>
 
+                <div class="note-box" style="margin-top: 1rem; background-color: #f8fafc; border-left-color: #64748b;">
+                    <p style="color: #334155;"><strong>2. IoU (交併比) ——「兩個框框的重疊程度」：</strong></p>
+                    <p style="color: #475569; margin-top: 0.5rem;">用來評估 AI 畫的框跟標準答案到底對得有多齊，公式是：<code>兩個框框重疊的面積 (交集) ÷ 兩個框框加起來的總面積 (聯集)</code>，重疊程度越高，IoU 就越接近 1，代表畫得越準！</p>
+                </div>
+
+                <div class="note-box" style="margin-top: 1rem; background-color: #fef3c7; border-left-color: #d97706;">
+                    <p style="color: #92400e;"><strong>3. NMS (非極大值抑制) ——「重複框框大掃除」：</strong></p>
+                    <p style="color: #78350f; margin-top: 0.5rem;">AI 在預測時會對同一個物體（例如一台車）畫出好多個密密麻麻的框，NMS 的工作就是挑出信心度最高的那一個框，然後把周圍其他跟它高度重疊（IoU很高）的冗餘框框全部刪掉，只留下唯一最完美的那個。</p>
+                </div>
+
                 <div class="note-box" style="margin-top: 1rem; background-color: #f0fdf4; border-left-color: #16a34a;">
-                    <p style="color: #166534;"><strong>備註：</strong>在深度學習中，前向傳播（Forward Pass）是指數據自輸入層進入，一路上前推經過神經網路各隱藏層進行矩陣運算，最終在輸出層得到預測結果的單向流動過程。YOLO 的特點即是在單次前向傳播中並行輸出位置與類別機率。</p>
+                    <p style="color: #166534;"><strong>4. 前向傳播 (Forward Pass) ——「數據單向不回頭」：</strong></p>
+                    <p style="color: #14532d; margin-top: 0.5rem;">意思是數據從照片輸入層進去，一路往前經過神經網路的層層矩陣運算，最後直接在輸出層產出結果，傳統方法要反覆跑好幾千次，而 YOLO 的厲害之處就在於只跑這一次就拿到了所有資料。</p>
                 </div>
             </section>
 
@@ -571,52 +683,93 @@
                 <h2>常見應用</h2>
                 <div class="grid-steps">
                     <div class="step-card">
-                        <h3><span class="step-num">1</span> 自動駕駛車辨識路人與車輛</h3>
-                        <p>在車子鏡頭中即時辨識行人、號誌及周遭車輛，確保行車安全。</p>
+                        <h3><span class="step-num">1</span> 自動駕駛辨識路人與車輛</h3>
+                        <p>在車子鏡頭中即時辨識行人、紅綠燈及周遭車輛，確保行車安全。</p>
+                        <img src="assets/22.webp" alt="自動駕駛應用示意圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 1rem auto;">
                     </div>
                     <div class="step-card">
-                        <h3><span class="step-num">2</span> 工廠流水線即時瑕疵檢測</h3>
+                        <h3><span class="step-num">2</span> 工廠流水線瑕疵檢測</h3>
                         <p>透過高速鏡頭自動過濾產線上的不良品，精準抓出外觀瑕疵。</p>
+                        <img src="assets/23.webp" alt="工廠流水線瑕疵檢測示意圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 1rem auto;">
                     </div>
                     <div class="step-card">
-                        <h3><span class="step-num">3</span> 無人機目標追蹤</h3>
+                        <h3><span class="step-num">3</span> 無人機動態目標追蹤</h3>
                         <p>鎖定特定動態地面目標進行空拍或跟隨任務。</p>
+                        <img src="assets/24.png" alt="無人機動態目標追蹤示意圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 1rem auto;">
                     </div>
                     <div class="step-card">
-                        <h3><span class="step-num">4</span> 球類比賽軌跡追蹤</h3>
-                        <p>分析球員跑位以及球類的運動路徑，提供即時的數據賽況分析。</p>
+                        <h3><span class="step-num">4</span> 球類比賽軌跡與動態分析</h3>
+                        <p>分析球員跑位以及球類的運動路徑，提供即時的數據賽況分析與好壞球判斷。</p>
+                        <img src="assets/23.png" alt="球類比賽軌跡與動態分析示意圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 1rem auto;">
                     </div>
                     <div class="step-card">
                         <h3><span class="step-num">5</span> 智慧安防監控</h3>
-                        <p>在監控系統中即時偵測異常入侵者或群聚事件，落現科技防範。</p>
+                        <p>在監控系統中即時偵測異常入侵者或群聚事件，落實科技防範。</p>
+                        <img src="assets/25.png" alt="智慧安防監控示意圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 1rem auto;">
                     </div>
                 </div>
             </section>
 
             <section id="section-analysis">
-                <h2>優缺點分析</h2>
+                <h2>雙階段與單階段技術對比</h2>
+                <p>YOLO (One-Stage) 與傳統技術（Two-Stage）的差別：</p>
+                
+                <table class="tech-table">
+                    <thead>
+                        <tr>
+                            <th>比較維度</th>
+                            <th>傳統雙階段 (如 Faster R-CNN)</th>
+                            <th>YOLO 單階段 (One-Stage)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>核心策略</strong></td>
+                            <td>先找區域（Where），再分類物體（What）。</td>
+                            <td>一步到位，看一眼同時決定位置與類別。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>速度表現</strong></td>
+                            <td>較慢（通常低於 30 FPS），難以應用在即時畫面。</td>
+                            <td>極快（可達 45~150+ FPS），完美做到即時監控。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>精準度</strong></td>
+                            <td>對細小物件、極度密集的物體定位精度通常較高。</td>
+                            <td>早期對細小物體較弱，但現代版本已大幅追平。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>代價缺點</strong></td>
+                            <td>非常吃電腦硬體效能，沒辦法裝在弱小的晶片上。</td>
+                            <td>背景理解強，但對於沒見過的奇特長寬比適應力稍弱。</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2 style="margin-top: 3rem;">優缺點分析</h2>
                 <div class="pros-cons">
                     <div class="pc-box pros">
                         <h3 style="color: #059669;">強大優勢</h3>
                         <ul>
                             <li><strong>速度極快：</strong> 輕量化版本甚至能突破 150 FPS，適配即時監控與自動駕駛。</li>
-                            <li><strong>全域背景理解：</strong> YOLO 在推論時掌握整張圖的脈絡，相比局部方法，較不容易把背景雜訊誤判為物件。</li>
+                            <li><strong>全域背景理解：</strong> YOLO 在看圖時是掌握整張圖的脈絡，相比局部方法，較不容易把背景的陰影誤判為物件。</li>
                             <li><strong>通用能力高：</strong> 面對非原生訓練集的藝術畫作或卡通風格，依然能維持穩定的表現。</li>
                         </ul>
                     </div>
                     <div class="pc-box cons">
-                        <h3 style="color: #dc2626;">面臨挑戰</h3>
+                        <h3 style="color: #dc2626;">面臨挑戰與極限</h3>
                         <ul>
-                            <li><strong>小物件難以捕捉：</strong> 受到網格空間特徵限制，當多個微小物體聚集在同一個鄰近網格時容易發生漏檢。</li>
-                            <li><strong>密集幾流重疊：</strong> 面對長寬比變化極大、高度重疊或極為密集的物件，部分輕量化模型定位精度受限。</li>
+                            <li><strong>小物體聚集容易漏看：</strong> 受到網格空間的限制，當好幾個非常微小的東西（例如遠處的一整群鳥）擠在同一個小格子裡時，容易發生漏檢。</li>
+                            <li><strong>適應力較弱：</strong> 如果遇到形狀極度奇特、沒見過的物體（例如一條拉得很長很細的繩子），模型在精準定位上容易產生形狀變形。</li>
+                            <li><strong>邊緣部署的精確度權衡：</strong> 當要把 YOLO 放在路口監視器或微型晶片時，為求速度會換上極輕量化模型，這會導致光線不足或模糊時的偵測率下滑。</li>
                         </ul>
                     </div>
                 </div>
             </section>
 
             <section id="section-evolution">
-                <h2>YOLO 演進</h2>
-                <p>以下是 YOLO 歷史上前七代的核心發展歷程：</p>
+                <h2>YOLO 演進史</h2>
+                <p>以下是 YOLO 歷史上最重要的核心發展歷程，從個人的開創之作到現代多任務宇宙：</p>
                 
                 <div class="version-grid">
                     <div class="v-card">
@@ -624,7 +777,7 @@
                             <h4 class="v-title">YOLOv1 (2015)</h4>
                             <span class="v-author">Joseph Redmon</span>
                         </div>
-                        <p class="v-body">開創性的第一代，第一次將物件偵測轉化為「單一迴歸問題」，放棄了複雜的候選區域，速度非常快，直接奠定了一階段物件偵測的框架。</p>
+                        <p class="v-body">開創性的第一代！第一次大膽地將物件偵測轉化為「單一迴歸問題」，放棄了複雜的候選區域，直接奠定了一階段物件偵測的框架。</p>
                         <span class="v-tech">💡 核心突破：End-to-End 單次推論</span>
                     </div>
 
@@ -633,7 +786,7 @@
                             <h4 class="v-title">YOLOv2 / 9000 (2016)</h4>
                             <span class="v-author">Joseph Redmon</span>
                         </div>
-                        <p class="v-body">引入了 Anchor Box（錨定框）機制並加入 Batch Normalization，大幅改善定位精準度，YOLO9000 版本更能同時識別高達 9000 種物體。</p>
+                        <p class="v-body">引入了 Anchor Box（錨定框）機制並加入批次正規化，大幅改善定位精準度，YOLO9000 版本更能同時識別高達 9000 種物體。</p>
                         <img src="assets/20.png" alt="錨定框">
                         <figcaption style="font-size: 0.9rem; color: var(--text-muted); text-align: center; margin-top: -0.5rem; margin-bottom: 1rem; font-weight: 500; letter-spacing: 0.5px;">
                             (錨定框（Anchor Box）示意圖)
@@ -646,7 +799,7 @@
                             <h4 class="v-title">YOLOv3 (2018)</h4>
                             <span class="v-author">Joseph Redmon</span>
                         </div>
-                        <p class="v-body">原作者最後一個版本，採用 Darknet-53 架構，最大的亮點是引入「多尺度預測」（類似特徵金字塔），徹底補齊了過往對小物件偵測能力不足的致命短板。</p>
+                        <p class="v-body">原作者最後一個版本，採用 Darknet-53 架構，最大亮點是引入「多尺度預測」（大、中、小尺寸通抓），徹底補齊了過往對小物件偵測能力不足的致命短板。</p>
                         <img src="assets/19.png" alt="多尺度預測">
                         <figcaption style="font-size: 0.9rem; color: var(--text-muted); text-align: center; margin-top: -0.5rem; margin-bottom: 1rem; font-weight: 500; letter-spacing: 0.5px;">
                             (多尺度預測示意圖)
@@ -659,26 +812,8 @@
                             <h4 class="v-title">YOLOv4 (2020)</h4>
                             <span class="v-author">Alexey Bochkovskiy</span>
                         </div>
-                        <p class="v-body">接續原作者之作，集合了當時深度學習領域中各式各樣的優化技巧（如 Mosaic 資料增強、Mish 激活函數等），在完全不犧牲速度的情況下，疊加準確度。</p>
+                        <p class="v-body">接續原作者之作，集合了當時深度學習領域中各式各樣的優化技巧（如 Mosaic 資料增強、Mish 激活函數等），在完全不犧牲速度的情況下疊加準確度。</p>
                         <span class="v-tech">💡 核心突破：Bag of Freebies / 特徵融合</span>
-                    </div>
-
-                    <div class="v-card">
-                        <div class="v-card-header">
-                            <h4 class="v-title">YOLOv5 (2020)</h4>
-                            <span class="v-author">Ultralytics 公司</span>
-                        </div>
-                        <p class="v-body">工程部署與生態的重大改變，拋棄了以往底層的 C 語言 Darknet，改用純 PyTorch 開發，其上手難度低、完善的部署工具，使其成為業界的主力。</p>
-                        <span class="v-tech">💡 核心突破：PyTorch 部署生態 / 自適應錨框</span>
-                    </div>
-
-                    <div class="v-card">
-                        <div class="v-card-header">
-                            <h4 class="v-title">YOLOv6 (2022)</h4>
-                            <span class="v-author">美團 (Meituan)</span>
-                        </div>
-                        <p class="v-body">針對工業端進行的硬體優化版本，特別為邊緣運算裝置、嵌入式硬體重構主幹網路，旨在達成極致的推論速度與高硬體吞吐量。</p>
-                        <span class="v-tech">💡 核心突破：重參數化 (RepVGG) / 工業優化</span>
                     </div>
 
                     <div class="v-card">
@@ -686,13 +821,40 @@
                             <h4 class="v-title">YOLOv7 (2022)</h4>
                             <span class="v-author">王建堯博士 / Alexey</span>
                         </div>
-                        <p class="v-body">由台灣中研院團隊主導研發，提出了擴展高效層聚合網路（E-ELAN）和基於卷積的重參數化模型，在速度與準確度平衡上創下了帕累托最優（當時世界第一）。</p>
+                        <p class="v-body">由台灣中研院團隊主導研發！提出了擴展高效層聚合網路（E-ELAN）和基於卷積的重參數化模型，在速度與準確度平衡上創下了帕累托最優（當時世界第一）。</p>
                         <span class="v-tech">💡 核心突破：E-ELAN 架構 / 模型縮放策略</span>
                         <div class="note-box" style="margin-top: 1rem; background-color: #f0fdf4; border-left-color: #16a34a;">
-                            <p style="color: #166534;"><strong>備註：</strong>帕累托最優：指資源分配的一種理想狀態：在無法使任何人境況變壞的前提下，也無法讓任何人的處境變得更好。此時的資源分配已經達到極致，沒有再改進的空間。</p>
+                            <p style="color: #166534;"><strong>備註：帕累托最優（Pareto Efficiency）</strong>：指資源分配的一種理想狀態，在這裡代表「速度」與「準確度」兩者互相拉扯下，達到了最完美的黃金平衡點，沒辦法在不犧牲其中一方的狀況下讓另一方更好了。</p>
                         </div>
                     </div>
+
+                    <div class="v-card">
+                        <div class="v-card-header">
+                            <h4 class="v-title">現代 YOLO：v8 到 v11+ (2023 - 現代)</h4>
+                            <span class="v-author">Ultralytics 公司等開源社群</span>
+                        </div>
+                        <p class="v-body">現代的 YOLO 已經從傳統的「物件偵測」變成一個「全能視覺框架」，它拋棄了死板的預設候選框，改用 <strong>Anchor-Free（無錨框）</strong> 技術，直接預測物體的中心點，讓反應速度跟準準度更上一層樓。</p>
+                        <p class="v-body" style="font-size: 0.9rem; color: var(--text-muted);">此外，現在只要用一個模型，就能同時搞定：物件偵測、實例分割（把物體邊緣像剪紙一樣剪出來）、姿勢辨識（抓出人體骨架關鍵點）等多元任務。</p>
+                        <span class="v-tech">💡 核心突破：Anchor-Free 機制 / 多任務一體化 (Multi-task Framework)</span>
+                    </div>
                 </div>
+            </section>
+
+            <section id="section-code">
+                <h2>實作程式碼 (Python)</h2>
+                <pre><code>from ultralytics import YOLO
+
+# 1. 載入開源的 YOLO 預訓練模型 (n 代表 nano 最輕量、速度最快的模型)
+model = YOLO("yolov8n.pt")
+
+# 2. 對影像進行即時物件偵測，並設定信心度門檻值
+results = model("traffic_image.jpg", conf=0.25)
+
+# 3. 將偵測完成、畫好框框的結果展示在畫面上
+results[0].show()
+
+# 4. 或是將結果儲存成新的照片檔案
+results[0].save(filename="predicted_output.jpg")</code></pre>
             </section>
 
             <section id="section-ai-learning">
@@ -700,12 +862,10 @@
                 
                 <div class="question-block">
                     <h3 class="question-title">📌 問題一</h3>
-                    
                     <div class="sub-segment">
                         <h4>💡 我問了 AI 什麼問題？</h4>
                         <img src="assets/2.png" alt="AI 問題一截圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
                     </div>
-
                     <div class="sub-segment">
                         <h4>📝 AI 的回答</h4>
                         <p>AI先是介紹了YOLO的出現原因跟命名巧思，接著介紹了核心運作流程，提到了網格劃分、邊框預測與置信度、類別機率預測、非極大值抑制，最後還補充了YOLO的優缺點分析、歷史演進，讓我對這個演算法有了更全面的理解。</p>
@@ -734,17 +894,20 @@
                             </div>
                         </details>
                     </div>
+                    <div class="sub-segment">
+                        <h4>AI 怎麼幫助我?</h4>
+                        <p>上網自己找資料的話，可能需要花費很多時間去閱讀跟理解，而且並不是每個網站說的內容都一樣，有些說的多有些說得少，但AI會幫我全部整理，並把重點列出。</p>
+                        
+                    </div>
                 </div>
 
                 <div class="question-block">
                     <h3 class="question-title">📌 問題二</h3>
-                    
                     <div class="sub-segment">
                         <h4>💡 我問了 AI 什麼問題？</h4>
                         <p>我對問題一裡提到的前向傳播不是很能理解，應該說完全不知道它是什麼意思，因此針對此問題，我再次詢問AI。</p>
                         <img src="assets/9.png" alt="AI 問題二截圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
                     </div>
-
                     <div class="sub-segment">
                         <h4>📝 AI 的回答</h4>
                         <p>AI先是介紹了叫做前向傳播的原因，再將前向傳播的步驟詳細說明。</p>
@@ -773,17 +936,56 @@
                             </div>
                         </details>
                     </div>
+                    <div class="sub-segment">
+                        <h4>AI 怎麼幫助我?</h4>
+                        <p>AI 通過具體的例子和詳細的介紹，讓我更清楚地理解了前向傳播的概念。</p>
+                        
+                    </div>
                 </div>
 
                 <div class="question-block">
                     <h3 class="question-title">📌 問題三</h3>
-                    
+                    <div class="sub-segment">
+                        <h4>💡 我問了 AI 什麼問題？</h4>
+                        <p>因為AI在介紹YOLO的時候都強調他的優點，但我很好奇這麼厲害的演算法有甚麼缺點。</p>
+                        <img src="assets/26.png" alt="AI 問題三截圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
+                    </div>
+                    <div class="sub-segment">
+                        <h4>📝 AI 的回答</h4>
+                        <details>
+                            <summary>🖼️ 點擊展開 / 收起：回答截圖 (1/3)</summary>
+                            <div class="details-content">
+                                <img src="assets/27.png" alt="回答截圖 (1/3)" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
+                            </div>
+                        </details>
+                        <details>
+                            <summary>🖼️ 點擊展開 / 收起：回答截圖 (2/3)</summary>
+                            <div class="details-content">
+                                <img src="assets/28.png" alt="回答截圖 (2/3)" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
+                            </div>
+                        </details>
+                        <details>
+                            <summary>🖼️ 點擊展開 / 收起：回答截圖 (3/3)</summary>
+                            <div class="details-content">
+                                <img src="assets/29.png" alt="回答截圖 (3/3)" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
+                            </div>
+                        </details>
+                        
+                    </div>
+                    <div class="sub-segment">
+                        <h4>AI 怎麼幫助我?</h4>
+                        <p>舉完例子後，可以發現不適用YOLO的狀況都是高精密度的事情，簡單來說，就是YOLO對於微小的東西無法精確辨識。</p>
+                        
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <h3 class="question-title">📌 問題四</h3>
                     <div class="sub-segment">
                         <h4>💡 我問了 AI 什麼問題？</h4>
                         <p>因為我想要生成一個厲害的YOLO流程圖，網路上的都千篇一律，所以我向AI尋求協助，請他幫我設計一個prompt來生成厲害的流程圖。</p>
                         <img src="assets/16.png" alt="AI 問題三截圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
                     </div>
-
                     <div class="sub-segment">
                         <h4>📝 AI 的回答</h4>
                         <details>
@@ -793,7 +995,13 @@
                             </div>
                         </details>
                     </div>
+                    <div class="sub-segment">
+                        <h4>AI 怎麼幫助我?</h4>
+                        <p>利用他的資料庫和分析能力，快速生成符合需求的流程圖，節省了大量查找和整理資料的時間。</p>
+                        
+                    </div>
                 </div>
+                
             </section>
 
             <section id="section-verification">
@@ -821,12 +1029,15 @@
                             </div>
                         </details>
                     </div>
-                    <p>查證自 <a href="https://chih-sheng-huang821.medium.com/%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92-%E7%89%A9%E4%BB%B6%E5%81%B5%E6%B8%AC-you-only-look-once-yolo-4fb9cf49453c" target="_blank">medium.com/深度學習-物件偵測</a>、
+                    <p style="margin-top: 1rem;">查證自 <a href="https://chih-sheng-huang821.medium.com/%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92-%E7%89%A9%E4%BB%B6%E5%81%B5%E6%B8%AC-you-only-look-once-yolo-4fb9cf49453c" target="_blank">medium.com/深度學習-物件偵測</a>、
                         <a href="https://ai4kids.ai/blogs/blog/what-is-yolo?srsltid=AfmBOoqB69i6gUHpqFHEu1w0MHxKi40SSP9yf9SnAgwKJwSN701Qt2_w" target="_blank">ai4kids.ai/blogs</a>、
-                        <a href="https://hackmd.io/@rayhchs/BkUKcHHuj" target="_blank">HACKMD/rayhchs</a>。</p>
-                </div>
+                        <a href="https://hackmd.io/@rayhchs/BkUKcHHuj" target="_blank">HACKMD/rayhchs</a>、<a href="https://arxiv.org/pdf/1506.02640" target="_blank">作者論文</a>。</p>
+                        
+                
+                    </div>
             </section>
 
+            <!-- 🎨 視覺化說明區塊已成功加在查證與修正後面 -->
             <section id="section-visual">
                 <h2>視覺化說明</h2>
                 <div style="text-align: center; margin: 3rem 0 1rem 0;">
@@ -844,17 +1055,17 @@
                 <div class="question-block" style="border-left: 4px solid #0284c7;">
                     <div class="sub-segment" style="margin-bottom: 1.5rem;">
                         <ul>
-                            <li><strong>起源：</strong>由義隆電子提出希望研發出一個系統，可以直接在路口的邊緣裝置上進行高效運算，達到「低延遲、低功耗、高準確」的動態號誌控制，後由中研院資訊所所長廖弘源、博士後研究員王建堯團隊接下，</li>
-                            <li><strong>技術創新：</strong>中研院團隊最初使用當時最強的物件偵測演算法YOLOv3，但王建堯博士跳脫傳統框架，研發出 CSPNet（跨階段局部網路），CSPNet 的核心思想是「資料分流」，它將特徵圖（Feature Maps）分成兩部分，一部分經過複雜運算，另一部分直接傳到後面結合，這樣做大幅減少了重複的梯度計算，不僅讓運算速度倍增，甚至因為保留了多樣化的特徵，精準度反而提升。</li>
+                            <li><strong>起源：</strong>由義隆電子提出希望研發出一個系統，可以直接在路口的邊緣裝置上進行高效運算，達到「低延遲、低功耗、高準確」的動態號誌控制，後由中研院資訊所所長廖弘源、博士後研究員王建堯團隊接下。</li>
+                            <li><strong>技術創新：</strong>中研院團隊最初使用當時最強的物件偵測演算法YOLOv3，但王建堯博士跳脫傳統框架，研發出 CSPNet（跨階段局部網路）。CSPNet 的核心思想是「資料分流」，它將特徵圖（Feature Maps）分成兩部分，一部分經過複雜運算，另一部分直接傳到後面結合，這樣做大幅減少了重複的梯度計算，不僅讓運算速度倍增，甚至因為保留了多樣化的特徵，精準度反而提升。</li>
                             <li><strong>部署地點：</strong>新竹科學園區的第一個路口（園區交通要道），以及桃園、新竹等地的多處重要路口。</li>
-                            <li><strong>動態號誌調控：</strong>系統在路側直接運算出每 5 分鐘、每小時的動態車流圖表與趨勢預測，交通控制系統會根據這些即時數據，自動微調尖峰時段的紅綠燈秒數。</li>
-
+                            <li><strong>動態號誌調控：</strong>系統在路側直接運算出每 5 分鐘、每小時的動態車流圖表與趨勢預測，交通控制系統會根據 these 即時數據，自動微調尖峰時段的紅綠燈秒數。</li>
                         </ul>
                     </div>
 
                     <div style="text-align: center; margin: 2rem 0 0.5rem 0;">
-                        <div style="position: relative; width: 100%; max-width: 640px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); border: 1px solid var(--border-color);">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/siIggu-g6Eg?si=fsCkbKnhfv7q4T4a" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/siIggu-g6Eg?si=fsCkbKnhfv7q4T4a" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
                         <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem; font-weight: 500;">
                             🎥 應用展示影片：中研院車流即時分析
                         </p>
@@ -867,22 +1078,22 @@
                 <div class="question-block" style="border-left: 4px solid #0284c7;">
                     <div class="sub-segment">
                         <h4>💡 對個人學習的實質幫助</h4>
-                        <p>AI對於學習我個人認為最大的幫助真的是快速，在時間有限的情況下，它能快速地幫你整理資料、寫prompt、製作網頁，在學習這個方面真的幫助很大，尤其像是我們現在這種程度，可能還不需要問到一些很高深的問題，AI基本上都能夠給出與事實相符率非常高的回答，雖然有時候會有一些偏差，但整體來說我覺得還是很有幫助。<br>
+                        <p>AI對於學習我個人認為最大的幫助真的是快速，在時間有限的情況下，它能快速地幫你整理資料、寫prompt、製作網頁，在學習這個方面真的幫助很大，尤其像是我們現在這種程度，可能還不需要問到一些很高深的問題，AI基本上都能求出與事實相符率非常高的回答，雖然有時候會有一些偏差，但整體來說我覺得還是很有幫助。<br>
                             第二個優點是，它可以幫我做出很好看的網頁，而且只要一個指令我就可以複製貼上，快速的很，雖然有時候溝通會有點障礙，但我依然認為優點大於缺點。</p>
                     </div>
                     <div class="sub-segment">
                         <h4>⚠️ 與 AI 協作的缺點與限制</h4>
                         <p>AI的協作的缺點在於，他的資料並不會完全正確，有時候會出現錯誤，所以當我們在使用AI學習或整理資料的時候應該要更加小心，多多查證與檢查，這樣才不會導致錯誤的發生。<br>
-                        除了資訊錯誤之外，另一個缺點是AI可能無法完全理解你內心希望他做到的事情，網頁上所有出現的東西都是我自己想的，包括導航欄還有Footer跟風格，但AI還真的不一定可以理解我想要我的網頁長怎樣，所以溝通了好久，但若是改變不了AI，那我們可以做到的事情就是增強自己寫prompt的能力，未來一定還有更多機會接觸AI，藉由此次機會增進自己對AI的溝通能力，我覺得是非常值得的一件事。</p>
+                            除了資訊錯誤之外，另一個缺點是AI可能無法完全理解你內心希望他做到的事情，網頁上所有出現的東西都是我自己想的，包括導航欄還有Footer跟風格，但AI還真的不一定可以理解我想要我的網頁長怎樣，所以溝通了好久，但若是改變不了AI，那我們可以做到的事情就是增強自己寫prompt的能力，未來一定還有更多機會接觸AI，藉由此次機會增進自己對AI的溝通能力，我覺得是非常值得的一件事。</p>
                     </div>
                     <div class="sub-segment" style="margin-bottom: 0;">
                         <h4>🧠 學會了什麼?</h4>
                         <p>YOLO這個演算法比我想像的還要有趣，發現現實生活中其實有很多東西都用到YOLO，除了上面說到的車流即時分析外，還有看到關於採果使用YOLO的技術，以及球類運動的好壞球偵測。<br>
-                        我藉著這次期末報告還學會了一些專有名詞，像是置信度分數、前向傳播、帕累托最優……，也讓我學會了如何用前端來包裝一個複雜的 AI 技術主題，知道要讓網頁好看還真不是一個簡單的事情。</p>
+                            我藉著這次期末報告還學會了一些專有名詞，像是置信度分數、前向傳播、帕累托最優……，也讓我學會了如何用前端來包裝一個複雜的 AI 技術主題，知道要讓網頁好看還真不是一個簡單的事情。</p>
                     </div>
                     <div class="sub-segment" style="margin-bottom: 0;">
                         <h4>🩵 心得</h4>
-                        <p>一開始我做這個網頁很沒有頭緒，雖然老師都有提示要放甚麼東西上來，但當我真的看完YOLO的相關資料後，我覺得我不知道該把什麼內容放到哪個部份，因為每個參考資料的說法都很不一樣，所以我也有請AI幫我整理，但越做越後面就越來越上手，也開始覺得好玩了，所以我很感謝這次的作業，讓我收穫滿滿。
+                        <p>一開始我做這個網頁很沒有頭緒，雖然老師都有提示要放甚麼東西上來，幕當我真的看完YOLO的相關資料後，我覺得我不知道該把什麼內容放到哪個部份，因為每個參考資料的說法都很不一樣，所以我也有請AI幫我整理，但越做越後面就越來越上手，也開始覺得好玩了，所以我很感謝這次的作業，讓我收穫滿滿。</p>
                     </div>
                 </div>
             </section>
