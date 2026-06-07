@@ -599,6 +599,7 @@
             <li><a href="#section-ai-learning"><span>🤖</span><span class="menu-text">AI 輔助學習</span></a></li>
             <li><a href="#section-verification"><span>✅</span><span class="menu-text">查證與修正</span></a></li>
             <li><a href="#section-visual"><span>🎨</span><span class="menu-text">視覺化說明</span></a></li>
+            <li><a href="#section-code"><span>💻</span><span class="menu-text">實作程式碼</span></a></li>
             <li><a href="#section-cases"><span>📈</span><span class="menu-text">應用實例</span></a></li>
             <li><a href="#section-reflection"><span>💭</span><span class="menu-text">學習反思</span></a></li>
         </ul>
@@ -840,23 +841,6 @@
                 </div>
             </section>
 
-            <section id="section-code">
-                <h2>實作程式碼 (Python)</h2>
-                <pre><code>from ultralytics import YOLO
-
-# 1. 載入開源的 YOLO 預訓練模型 (n 代表 nano 最輕量、速度最快的模型)
-model = YOLO("yolov8n.pt")
-
-# 2. 對影像進行即時物件偵測，並設定信心度門檻值
-results = model("traffic_image.jpg", conf=0.25)
-
-# 3. 將偵測完成、畫好框框的結果展示在畫面上
-results[0].show()
-
-# 4. 或是將結果儲存成新的照片檔案
-results[0].save(filename="predicted_output.jpg")</code></pre>
-            </section>
-
             <section id="section-ai-learning">
                 <h2>AI 輔助學習紀錄</h2>
                 
@@ -905,7 +889,7 @@ results[0].save(filename="predicted_output.jpg")</code></pre>
                     <h3 class="question-title">📌 問題二</h3>
                     <div class="sub-segment">
                         <h4>💡 我問了 AI 什麼問題？</h4>
-                        <p>我對問題一裡提到的前向傳播不是很能理解，應該說完全不知道它是什麼意思，因此針對此問題，我再次詢問AI。</p>
+                        <p>我對問題一裡提到的前向傳播不是很能理解，應該說完全不知道它是什麼意思，針對此問題，我再次詢問AI。</p>
                         <img src="assets/9.png" alt="AI 問題二截圖" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;">
                     </div>
                     <div class="sub-segment">
@@ -974,7 +958,7 @@ results[0].save(filename="predicted_output.jpg")</code></pre>
                     </div>
                     <div class="sub-segment">
                         <h4>AI 怎麼幫助我?</h4>
-                        <p>舉完例子後，可以發現不適用YOLO的狀況都是高精密度的事情，簡單來說，就是YOLO對於微小的東西無法精確辨識。</p>
+                        <p>舉完例子後，可以發現不適用YOLO的狀況都是高精密度的事情，簡單來說，就是YOLO對微小的東西無法精確辨識。</p>
                         
                     </div>
                 </div>
@@ -1037,7 +1021,6 @@ results[0].save(filename="predicted_output.jpg")</code></pre>
                     </div>
             </section>
 
-            <!-- 🎨 視覺化說明區塊已成功加在查證與修正後面 -->
             <section id="section-visual">
                 <h2>視覺化說明</h2>
                 <div style="text-align: center; margin: 3rem 0 1rem 0;">
@@ -1047,6 +1030,17 @@ results[0].save(filename="predicted_output.jpg")</code></pre>
                             YOLO 流程圖
                         </figcaption>
                     </figure>
+                </div>
+            </section>
+
+            <section id="section-code">
+                <h2>實作程式碼</h2>
+                 <div class="note-box" style="margin-top: 1.5rem; background-color: #f0fdf4; border-left-color: #16a34a; text-align: center; padding: 1.5rem;">
+                    <p style="color: #166534; font-weight: 600; font-size: 1.1rem; margin-bottom: 1rem;">Google Colab YOLO 實作</p>
+                    <p style="color: #14532d; font-size: 0.95rem; margin-bottom: 1.5rem;">歡迎點擊下方連結線上檢視與執行。</p>
+                    <a href="https://colab.research.google.com/drive/1zI96yJi8-1yvYxXanneBEPktJidN4ecB?usp=sharing" target="_blank" style="display: inline-block; background-color: #16a34a; color: white; text-decoration: none; font-weight: 600; padding: 0.6rem 2rem; border-radius: 50px; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2); transition: all 0.2s ease;">
+                        👉 點此前往 Google Colab
+                    </a>
                 </div>
             </section>
 
@@ -1084,7 +1078,7 @@ results[0].save(filename="predicted_output.jpg")</code></pre>
                     <div class="sub-segment">
                         <h4>⚠️ 與 AI 協作的缺點與限制</h4>
                         <p>AI的協作的缺點在於，他的資料並不會完全正確，有時候會出現錯誤，所以當我們在使用AI學習或整理資料的時候應該要更加小心，多多查證與檢查，這樣才不會導致錯誤的發生。<br>
-                            除了資訊錯誤之外，另一個缺點是AI可能無法完全理解你內心希望他做到的事情，網頁上所有出現的東西都是我自己想的，包括導航欄還有Footer跟風格，但AI還真的不一定可以理解我想要我的網頁長怎樣，所以溝通了好久，但若是改變不了AI，那我們可以做到的事情就是增強自己寫prompt的能力，未來一定還有更多機會接觸AI，藉由此次機會增進自己對AI的溝通能力，我覺得是非常值得的一件事。</p>
+                            除了資訊錯誤之外，另一個缺點是AI可能無法完全理解你內心希望他做到的事情，網頁上所有出現的東西都是我自己想的，包括導航欄還有Footer跟風格，幕AI還真的不一定可以理解我想要我的網頁長怎樣，所以溝通了好久，幕若是改變不了AI，那可以做到的事情就是增強自己寫prompt的能力，未來一定還有更多機會接觸AI，藉由此次機會增進自己對AI的溝通能力，我覺得是非常值得的一件事。</p>
                     </div>
                     <div class="sub-segment" style="margin-bottom: 0;">
                         <h4>🧠 學會了什麼?</h4>
@@ -1093,7 +1087,7 @@ results[0].save(filename="predicted_output.jpg")</code></pre>
                     </div>
                     <div class="sub-segment" style="margin-bottom: 0;">
                         <h4>🩵 心得</h4>
-                        <p>一開始我做這個網頁很沒有頭緒，雖然老師都有提示要放甚麼東西上來，幕當我真的看完YOLO的相關資料後，我覺得我不知道該把什麼內容放到哪個部份，因為每個參考資料的說法都很不一樣，所以我也有請AI幫我整理，但越做越後面就越來越上手，也開始覺得好玩了，所以我很感謝這次的作業，讓我收穫滿滿。</p>
+                        <p>一開始我做這個網頁很沒有頭緒，雖然老師都有提示要放甚麼東西上來，幕當我真的看完YOLO的相關資料後，我覺得我不知道該把什麼內容放到哪個部份，因為每個參考資料的說法都很不一樣，所以我也有請AI幫我整理，幕越做越後面就越來越上手，也開始覺得好玩了，所以我很感謝這次的作業，讓我收穫滿滿。</p>
                     </div>
                 </div>
             </section>
